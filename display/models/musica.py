@@ -29,9 +29,14 @@ class Musica(models.Model):
 		verbose_name="Musica",
 		help_text='Adicione aqui musicas no formato .mp3',
 		upload_to='musics/',
-		blank=False, null=True,
+		blank=True, null=True,
         validators=[validate_file_extension]
 	)
+
+    url = models.URLField(
+        verbose_name='URL',
+        null=True, blank=False
+    )
     
 
     def __str__(self):

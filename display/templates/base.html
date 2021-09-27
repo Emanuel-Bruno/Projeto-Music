@@ -37,10 +37,9 @@
                 
                 <div class="display" data-idordem="{{forloop.counter}}" data-titulo="{{musica}}">
                     <audio id="player{{musica.id}}">
-                        <source src="{{musica.musica.url}}" type="audio/mp3"/>
+                        <source src="{{musica.url}}" type="audio/mp3"/>
                     <p>Erro ao produzir o audio</p>
                     </audio>
-                    
                     <a id="pause_in_playlist" class="pausar" onclick="pausarMusica()">
                         <img height="30px" src="{% static 'base/img/pause.svg' %}" alt="pausar">
                     </a>

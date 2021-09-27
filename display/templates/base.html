@@ -1,0 +1,224 @@
+{% load static %}
+{% load playlist_tag %}
+{% playlist_atual as playlist_atual %}
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeuAzer</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'base/img/iconAba.png' %}">
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+</head>
+<style>
+
+</style>
+<body>
+    <div class="container">
+    {% block 'container' %}
+    {% endblock %}
+    </div>
+    <div class="caixa_selecao">
+        <div > Lista da sua playlist
+            <div id="minimizador_caixa_selecao" onclick="minimizar_caixa_selecao()" class="btn minimizar" href="#">
+                <img width="15px" src="{% static 'base/img/minimizar.svg' %}" alt="Minimizar Tela">
+            </div>
+            <div style="display: none;" id="maximizador_caixa_selecao" onclick="maximizar_caixa_selecao()" class="btn maximizar" href="#">
+                <img height="15px" src="{% static 'base/img/maximizar.svg' %}" alt="Maximizar Tela">
+            </div>
+        </div>
+        <div class="decoration_divisor_caixa_selecao"></div>
+        <div id="body_caixa_selecao" class="maximizado" >
+            <div id="conteudo_caixa_selecao">
+                {% for musica in playlist_atual.musicas.all %}
+                
+                <div class="display" data-idordem="{{forloop.counter}}" data-titulo="{{musica}}">
+                    <audio id="player{{musica.id}}">
+                        <source src="{{musica.musica.url}}" type="audio/mp3"/>
+                    <p>Erro ao produzir o audio</p>
+                    </audio>
+                    
+                    <a id="pause_in_playlist" class="pausar" onclick="pausarMusica()">
+                        <img height="30px" src="{% static 'base/img/pause.svg' %}" alt="pausar">
+                    </a>
+
+                    <a id="play_in_playlist" class="iniciar" onclick="iniciarMusica()">
+                        <img height="30px" src="{% static 'base/img/playPlaylist.svg' %}" alt="Iniciar">
+                    </a>
+
+                    <a id="music_select" class="iniciar" onclick="selecionarMusica('player{{musica.id}}')">
+                        <img height="30px" src="{% static 'base/img/selectMusic.svg' %}" alt="Iniciar">
+                    </a>
+
+                  
+                    <div class="ml-8 titulo">{{musica}}</div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+    <nav class="bar-bottom">
+        <div class="conteudo_nav">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'base/img/logo.svg' %}" alt="Logo Site">
+                </a>
+                
+            </div>
+            <div class="opcoes_nav" min-width="300px;" min-height="80px;">
+                <div class="heart">
+                    <img  src="{% static 'base/img/heart.svg' %}" alt="Amar">
+                    29k
+                </div>
+                <div class="search">
+                    <img  src="{% static 'base/img/search.svg' %}" alt="Buscar">
+                </div>
+                <div class="user">
+                    <img  src="{% static 'base/img/user.svg' %}" alt="Usuário">
+                </div>
+                <div class="menu">
+                    <img  src="{% static 'base/img/menu.svg' %}" alt="Menu">
+                </div>
+            
+            </div>
+            <div class="musica_selecionada">
+                <div class="opcoes_display">
+                    
+                    <a id="btn_selecionado_play" role="button" class="btn" onclick="iniciarMusica()"><img height="30px" src="{% static 'base/img/play.svg' %}" alt="Iniciar">
+                    </a>
+                    <a  id="btn_selecionado_pause" role="button" class="btn" onclick="pausarMusica()"><img height="30px" src="{% static 'base/img/pauseDisplay.svg' %}" alt="Pausar">
+                    </a>
+                    <div class="musica_info ml-8">
+                        <div id="title_musica_selecionada" class="title_musica_selecionada">
+                            Seu Jorge - Burguesinha
+                        </div>
+                        <input class="slider_tempo" id="player_time_atual" type="range" id="weight" min="0" value="0" max="1" step="0.01" onchange="tempoAtual(this.value)">
+                        
+                    </div>
+                    <div class="icone_volume ml-8">
+                        <img src="{% static 'base/img/volumeIcon.svg' %}" alt="volume">
+                    </div>
+                    <input class=" ml-8 slider_volume" type="range" id="weight" min="0" value="0.5" max="1" step="0.02" onchange="trocarVolume(this.value)">
+                </div>
+                
+            </div>
+            
+            </div>
+            </div>
+    </nav>
+
+    <script src="{% static 'base/js/main.js' %}"></script>
+    <script>
+        const exibirPlayInPlaylist = ()=>{
+            document.querySelector('.tocando #pause_in_playlist').style.display="none"
+            document.querySelector('.tocando #play_in_playlist').style.display="block"
+        }
+        const esconderPlayPause = ()=>{
+            document.querySelector('.tocando #pause_in_playlist').style.display="none"
+            document.querySelector('.tocando #play_in_playlist').style.display="none"
+        }
+
+        const exibirPauseInPlaylist = ()=>{
+            document.querySelector('.tocando #pause_in_playlist').style.display="block"
+            document.querySelector('.tocando #play_in_playlist').style.display="none"
+        }
+
+        const exibirPlay = ()=>{
+            document.getElementById("btn_selecionado_play").style.display = "block";
+            document.getElementById("btn_selecionado_pause").style.display = "none";
+        }
+
+        const exibirPause = ()=>{
+            document.getElementById("btn_selecionado_play").style.display = "none";
+            document.getElementById("btn_selecionado_pause").style.display = "block";
+        }
+
+
+        var musica_inicial = '{{playlist_atual.musicas.all.0.id}}'
+        var musica_selecionada=`player${musica_inicial}`
+        atualizar_style_display()
+        exibirPlay()
+        exibirPlayInPlaylist()
+        
+        musica_add_evento_troca_next_musica()
+        
+        
+
+        function atualizar_style_display(){
+            var elemento_pai_selecionado=document.getElementById(musica_selecionada).parentNode
+            elemento_pai_selecionado.classList.add('tocando')
+            let titulo = document.getElementById('title_musica_selecionada')
+            titulo.innerText=elemento_pai_selecionado.dataset.titulo
+        }
+
+        function remover_style_display(){
+            var elemento_pai_selecionado=document.getElementById(musica_selecionada).parentNode
+            elemento_pai_selecionado.classList.remove('tocando')
+        }
+
+        const iniciarMusica = () =>{
+            document.getElementById(musica_selecionada).play()
+            exibirPauseInPlaylist()
+            exibirPause()
+        }
+
+        const pausarMusica = () =>{
+            document.getElementById(musica_selecionada).pause()
+            exibirPlayInPlaylist()
+            exibirPlay()
+        }
+
+        const selecionarMusica = (id) => {
+            esconderPlayPause()
+            document.getElementById(musica_selecionada).pause()
+            remover_style_display()
+            musica_selecionada=id
+            atualizar_style_display()
+            exibirPause()
+            exibirPauseInPlaylist()
+            document.getElementById(musica_selecionada).play()
+            musica_add_evento_troca_next_musica()
+        }
+
+        const trocarVolume = (value) => {
+            document.getElementById(musica_selecionada).volume=value
+        }
+
+        const tempoAtual = (tempo) => {
+            document.getElementById(musica_selecionada).currentTime = (document.getElementById(musica_selecionada).duration*tempo)
+
+        }
+
+        
+        setInterval(() => {
+            let tempoAtual=(document.getElementById(musica_selecionada).currentTime/document.getElementById(musica_selecionada).duration)
+            let elemento = document.getElementById('player_time_atual')
+            elemento.value=tempoAtual
+           
+        }, 1000);
+
+        function musica_add_evento_troca_next_musica(){
+            document.getElementById(musica_selecionada).addEventListener('ended', ()=>{
+                pausarMusica()
+                let elemento_pai_selecionado = document.getElementById(musica_selecionada).parentNode
+                let idordem=elemento_pai_selecionado.dataset.idordem
+                let elemento_novo = document.querySelectorAll(`[data-idordem='${parseInt(idordem)+1}']`)[0]
+                if(elemento_novo){
+                    remover_style_display()
+                    let numero_player=(elemento_novo.firstElementChild)
+                    musica_selecionada=numero_player.id
+                    musica_add_evento_troca_next_musica()
+                    atualizar_style_display()
+                    iniciarMusica()
+                }
+            
+            })
+        }
+
+    </script>
+</body>
+</html>

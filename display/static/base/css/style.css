@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,500;1,700&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(74.1deg, var(--bg-fundo-escuro) 51.47%, var(--bg-fundo-preto) 51.47%);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-primary);
+    overflow-x: hidden;
+}
+
+a{
+    text-decoration: none;
+}
+
+.container{
+    padding: 10px 80px 80px 80px;
+}
+
+.bar-bottom{
+    width: 100vw;
+    height: 80px;
+    position: fixed;
+    bottom:0;
+    padding: 0 80px;
+    background-color: var(--bg-fundo-preto);
+}
+
+.caixa_selecao{
+    width: 300px;
+    min-height: 20px;
+    font-size: 0.8rem;
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+    background-color: var(--color-secundary);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 5px 10px;
+    margin: auto 0;
+}
+
+.caixa_selecao .maximizado{
+    height: 200px !important;
+}
+
+.caixa_selecao .maximizar{
+    float: right
+}
+.caixa_selecao .minimizar{
+    float: right
+}
+
+.btn{
+    cursor: pointer;
+}
+
+.decoration_divisor_caixa_selecao{
+    height: 1px;
+    margin: 10px 0;
+    width: 100%;
+    background-color: var(--bg-fundo-decoration) !important;
+    
+}
+
+#body_caixa_selecao{
+    overflow-x: auto;
+    width: 100%;
+}
+
+.conteudo_nav{
+    display: flex;
+    flex-direction: row;
+}
+
+.opcoes_nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 600px;
+}
+
+.heart{
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+}
+.search{
+    margin-right: 25px;
+}
+.user{
+    margin-right: 100px;
+}
+
+
+
+.display{
+    background-color: var(--bg-fundo-preto);
+    border-radius: 30px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.tocando{
+    background-color: var(--color-primary) !important;
+    color: black !important;
+}
+
+.opcoes_display{
+    padding-left: 70px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.musica_info{
+    width: 210px;
+}
+
+.pausar{
+    cursor: pointer;
+}
+.iniciar{
+    cursor: pointer;
+}
+
+.display #pause_in_playlist{
+    display: none;
+}
+
+.display #play_in_playlist{
+    display: none;
+}
+
+.display #music_select{
+    display: block;
+}
+
+.tocando #play_in_playlist{
+    display: block;
+}
+
+.tocando #pause_in_playlist{
+    display: block;
+}
+.tocando #music_select{
+    display: none;
+}
+
+.slider_tempo{
+    width: 100%;
+}
+
+.ml-8{
+    margin-left: 8px;
+}
+
+.slider_volume{
+    transform: rotate(-90deg); 
+    max-width: 60px;
+    height: 5px;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;               /* width of the entire scrollbar */
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: var(--bg-fundo-preto);        /* color of the tracking area */
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: var(--color-secundary);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 1px solid var(--bg-fundo-preto);  /* creates padding around scroll thumb */
+    padding-bottom: 80px;
+  }
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      width: 100%;
+      -webkit-appearance: none;
+      background-color: var(--color-primary);
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 5px;
+      -webkit-appearance: none;
+      color: var(--color-secundary);
+      margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 5px;
+      cursor: ew-resize;
+      background: var(--color-secundary);
+      box-shadow: -80px 0 0 80px var(--color-secundary);
+    }
+
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: var(--color-secundary); 
+}
+
+input[type="range"]::-moz-range-track {  
+  background-color: var(--color-primary);
+}
+
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: var(--color-secundary); 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: var(--color-primary);
+}
+
+:root{
+    --color-primary: #f4f4f4;
+    --color-secundary: #CF052D;
+    --bg-fundo-escuro: #131313;
+    --bg-fundo-preto: #000;
+    --bg-fundo-decoration: rgba(0, 0, 0, 0.3);
+}

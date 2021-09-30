@@ -1,5 +1,5 @@
 UFERSA
-# Projeto-Music
+# Projeto-Music em DJANGO
 Disciplina Multimidia
 
 
